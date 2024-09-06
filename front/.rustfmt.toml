@@ -1,0 +1,5 @@
+indent_style = "spaces"
+indent_size = 4
+max_width = 120
+wrap_comments = true
+use_small_heuristics = false

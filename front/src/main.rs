@@ -1,10 +1,8 @@
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 
-
 #[get("/")]
 async fn hello() -> impl Responder {
-  
-   let html = r#"
+    let html = r#"
    <html>
    <head>
      <title>Magazine</title>
@@ -106,6 +104,28 @@ async fn hello() -> impl Responder {
      .cart li span {
         font-weight: bold;
       }
+      #cart-container {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      #cart-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      #cart-list li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+      
+      #cart-list li:last-child {
+        border-bottom: none;
+      }
      </style>
    </head>
    <body>
@@ -117,6 +137,10 @@ async fn hello() -> impl Responder {
         <button>Login</button>
       </form>
     </div>
+    <div id="cart-container">
+      <h2>shopping cart</h2>
+        <ul id="cart-list"></ul>
+    </div>
   </body>
    <body>
      <h1>Vitrina</h1>
@@ -125,19 +149,25 @@ async fn hello() -> impl Responder {
         <img src="https://yastatic.net/naydex/yandex-search/MSt16e981/f550f1XG/iwyHoKA0kQ3iEW-Rxt26pI8jCfVRwkZWh1OvjNV3004xPtaLv-ix8ygGIzUBQBqbKNZeh6i90KyK9RHtYPwBEh5YwrSE8OVcZ6Rr0EOdOpTfAtwhYNOD9sKCC6kV45bboZ72rQkPJvFuYUUH02cdGtjz-4JsWSHY_HaA" alt="Apple">
          <h2>Apple</h2>
          <p>100/1kg</p>
-         <button>Add to Cart</button>
+         <form id="add-to-cart-form">
+         <input type="number" id="quantity" value="1">
+         <button id="add-to-cart-btn">Add to Cart</button>
        </div>
        <div class="product">
        <img src="https://yastatic.net/naydex/yandex-search/MSt16e981/f550f1XG/iwyHoKA0kQ3iEW-Rxt26pI8jCfVRwkZWh1OvjNCi9g4hDva7is0Rts3T8wA0Ja_OzaMO5zjo0MzKABSoIPnxB044ojGk8IV8l-R7wHOdOpTfAtwhYNOD9sKCC6kV45bboZ72rQkPJvFuYUUH02cdGtjz-4JsWSHY_HaA" alt="Banana">		
          <h2>Banana</h2>
          <p>150/1kg</p>
-         <button>Add to Cart</button>
+         <form id="add-to-cart-form">
+         <input type="number" id="quantity" value="1">
+         <button id="add-to-cart-btn">Add to Cart</button>
        </div>
        <div class="product">
          <img src="https://yastatic.net/naydex/yandex-search/MSt17e083/f550f1XG/iwyHoKA0kQ3iEW-Rxt26pI8jCfVRwkZWh1OvjNCn1jsEa6Pbf4hB9i3z0wUklbrraKY7l3i40Jz_xUSIoNwkQi59t4S08KU8Z1Sr8HJJetQfYv1EhUJCJ0JzHv1lIkJu9K42i8kOxvFfsETWY4f9aalzCyJ9jEQYjtaCI" alt="Pear">
          <h2>Pear</h2>
          <p>200/1kg</p>
-         <button>Add to Cart</button>
+         <form id="add-to-cart-form">
+         <input type="number" id="quantity" value="1">
+         <button id="add-to-cart-btn">Add to Cart</button>
        </div>
      </div>
    </body>
@@ -158,12 +188,11 @@ async fn hello() -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
-        App::new()
-        .service(hello)
+        App::new().service(hello)
         // .service(echo)
         // .route("/hey", web::get().to(manual_hello))
     })
-  .bind("127.0.0.1:8080")?
-  .run()
-  .await
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
 }
